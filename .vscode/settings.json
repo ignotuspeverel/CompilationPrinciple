@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "regex.h": "c",
-        "analex.h": "c"
+        "analex.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c",
+        "anasynt.h": "c"
     }
 }

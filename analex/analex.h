@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include "./library/queue.h"
+#include "../library/queue.h"
 
 #define REGEX_COMMENT          "[\n| ]?\\( .*\\)[\n]|[\n| ]?\\\\[^\n]*[\n]|[\n| ]?\\( .*[\n].*\\)[\n]"  
 #define REGEX_STRING           "\" [^\"]*\"|\" [^\"]*[\n][^\"]*\""
