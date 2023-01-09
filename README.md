@@ -38,11 +38,10 @@ gcc projet1.c analex.c ../library/queue.c -o test
 For this part, I used a BNF. All the detailed files are in the folder **anasynt**.
 
 The BNF I used is:
-$$
-<fact>\quad := \quad<factD>\quad | \quad<fact><factD>  \newline
-<factD>\quad := \quad N \quad|\quad O <term> F \newline
-<term> \quad:= \quad<fact> \quad| \quad<term> P <fact> \quad | \quad<term> M <fact> | \quad M <fact>
-$$
+
+
+
+![](D:\plt\src\BNF.jpg)
 
 | **N**    | **NUMBER**     |
 | -------- | -------------- |
@@ -59,11 +58,11 @@ The whole function is designed based on a recursive idea.
 
 **assemble:** to assemble a tree with left child and right child.
 
-**factD:** to recognize a **<factD>.**
+**factD:** to recognize a **factD.**
 
-**fact:**  to recognize a **<fact>**.
+**fact:**  to recognize a **fact**.
 
-**term:** to recognize a **<term>**.
+**term:** to recognize a **term**.
 
 **printTree:** to print a tree.
 
@@ -77,4 +76,65 @@ gcc projet2.c anasynt.c -o test
 ```
 
 **RESULT:**
+
+![](D:\plt\src\anasyntRes.jpg)
+
+## Part3. Analyse sémantique et compilation des fonctions du processeur
+
+This part we write a function find to get the CFA of a lexeme in the LAC.
+
+### FUNCTION:
+
+The test LAC is :
+
+```c
+int LAC[] = {0, 1, 43, 0, 1, 4, 115, 119, 97, 112, 2, 5};
+```
+
+This LAC has 2 function: '+' and "swap" 
+
+
+
+The test string of functions is:
+
+```c
+char* mots = "+ swap non"; 
+```
+
+This string has 3 functions '+', "swap" and "non".
+
+We then create the lexeme a, b and c by using the struct **lexique**.
+
+The function of **find**:
+
+```c
+/*
+   @brief find the cfa by LAC
+   @param LAC, length of the Lac, origin file, the input lexeme
+*/
+int find(int lac[], int length, char* origin, lexique lex)
+```
+
+### **USAGE:**
+
+To test in Linux, use the following code in bash to compile and run:
+
+```bash
+gcc projet3.c find.c -o test
+./test
+```
+
+### **RESULT:**
+
+![](D:\plt\src\res3.jpg)
+
+
+
+
+
+
+
+
+
+
 

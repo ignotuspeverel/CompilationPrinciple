@@ -4,6 +4,7 @@
         "analex.h": "c",
         "stdio.h": "c",
         "stdlib.h": "c",
-        "anasynt.h": "c"
+        "anasynt.h": "c",
+        "stdbool.h": "c"
     }
 }
