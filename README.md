@@ -31,7 +31,7 @@ gcc projet1.c analex.c ../library/queue.c -o test
 
 ### **RESULT:**
 
-![](.\src\lexresult.jpg)
+<img src=".\src\lexresult.jpg" />
 
 ## Part 2. Analyse syntaxique
 
@@ -77,7 +77,7 @@ gcc projet2.c anasynt.c -o test
 
 **RESULT:**
 
-![](D:\plt\src\anasyntRes.jpg)
+<img src=".\src\anasyntRes.jpg" />
 
 ## Part3. Analyse sémantique et compilation des fonctions du processeur
 
@@ -126,7 +126,7 @@ gcc projet3.c find.c -o test
 
 ### **RESULT:**
 
-![](D:\plt\src\res3.jpg)
+<img src=".\src\res3.jpg" />
 
 
 
