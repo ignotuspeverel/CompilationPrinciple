@@ -38,6 +38,7 @@ gcc projet1.c analex.c ../library/queue.c -o test
 For this part, I used a BNF. All the detailed files are in the folder **anasynt**.
 
 The BNF I used is:
+
 <img src=".\src\BNF.jpg" />
 
 
