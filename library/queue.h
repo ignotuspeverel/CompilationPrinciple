@@ -23,10 +23,20 @@ typedef struct queue_manager
 
 }queue;
 
+/**
+ * @brief queue manager creation, return an empty queue
+ */
 queue *queue_create();
 
+/**
+ * @brief queue manager creation, return an empty queue
+ */
 void queue_init(queue* queue_ptr);
 
+/**
+ * @brief Enqueue element at the end of queue
+ * @param queue pointer, element pointer, int for element size
+ */
 bool queue_push_back(queue *queue_ptr, void *element, int element_size);
 
 #endif

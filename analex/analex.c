@@ -21,7 +21,7 @@ bool lex_analyse(FILE *file, queue *q) {
     //open the file
     if ((file == NULL)) {
         perror("Error getting the file");
-         regfree(&reg_compile_comment);
+        regfree(&reg_compile_comment);
         regfree(&reg_compile_string);
         regfree(&reg_compile_int);
         regfree(&reg_compile_mot);

@@ -1,9 +1,8 @@
-
 #include "queue.h"
 
 
 /*
-   @brief queue manager creation, return an empty queue
+*  @brief queue manager creation, return an empty queue
 */
 queue *queue_create() {
     queue *ptr_queue;

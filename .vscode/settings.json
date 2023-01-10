@@ -5,6 +5,8 @@
         "stdio.h": "c",
         "stdlib.h": "c",
         "anasynt.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "interpret.h": "c",
+        "queue.h": "c"
     }
 }
