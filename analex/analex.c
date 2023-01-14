@@ -7,10 +7,10 @@
 #define STATE_MOT 4
 
 
-/*
+/**
    @brief lexique analysis of a file
    @param FILE and a queue to store the result of the lexique
-*/
+ */
 bool lex_analyse(FILE *file, queue *q) {
     int bufferLength = 0;
     regex_t reg_compile_comment;
@@ -145,10 +145,10 @@ bool lex_analyse(FILE *file, queue *q) {
     return true;
 }
 
-/*
+/**
    @brief Enqueue element at the end of queue
    @param char buffer[] of input, and a queue that stores the result
-*/
+ */
 void display_queue(char buffer[], queue *q){
     printf("\n--------------Result-------------------\n");
     lexique lex;
@@ -209,5 +209,5 @@ void display_queue(char buffer[], queue *q){
         }
         temp = temp->next;
     }
-    printf("--------------Result-------------------\n");
+    printf("---------------end---------------------\n\n");
 }

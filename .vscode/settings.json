@@ -7,6 +7,7 @@
         "anasynt.h": "c",
         "stdbool.h": "c",
         "interpret.h": "c",
-        "queue.h": "c"
+        "queue.h": "c",
+        "compilation.h": "c"
     }
 }
