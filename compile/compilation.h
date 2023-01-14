@@ -14,14 +14,14 @@ typedef void (*base)();
 base processeur[PSize];
 int LAC[LACSize];
 int VM[VMSize];
-int lacPtr = 0; 
-int vmPtr = 0;
+int lacPtr; 
+int vmPtr;
 
 /**
    @brief compile base function
    @param char name[] of function, function address, location in the processeur
  */
-void compile_base(char* name, base* func, int numProcesseur);
+void compile_base(char* name, base func, int numProcesseur);
 
 /**
    @brief compile lac function
@@ -82,13 +82,13 @@ void def();
    @brief base function 7, '=', check the top of the 2 elements in stack is equal or not
    @return equal -1; not equal 0
  */
-int equal();
+void equal();
 
 /**
    @brief base function 8, 'if', check the stack top is -1 or 0
    @return -1 else; 0 then
  */
-int myif();
+void myif();
 
 /**
    @brief base function 9, 'drop', pop the stack top

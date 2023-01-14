@@ -8,6 +8,7 @@
         "stdbool.h": "c",
         "interpret.h": "c",
         "queue.h": "c",
-        "compilation.h": "c"
+        "compilation.h": "c",
+        "find.h": "c"
     }
 }

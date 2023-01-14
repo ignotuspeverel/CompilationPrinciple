@@ -16,6 +16,8 @@ int main (int argc, char** argv)
     lex_analyse(file, &queue_res);
 
     compile_code(&queue_res);
+    printf("%d\n",lacPtr);
+    printf("%d\n",vmPtr);
     display();
 
     fclose(file);
