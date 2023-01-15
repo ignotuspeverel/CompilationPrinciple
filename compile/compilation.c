@@ -32,35 +32,35 @@ void compile_base(char* name, base func, int numProcesseur) {
 
 /**
    @brief compile lac function 1- 0=
-   @param char name[] of function, char func[] how to compile
+   @param char name[] of function, char func[] compile format
  */
 void compile_lac(char* name, char* func) {
     //update VM
-    char* bf = "(lit) (fin) + - * = \0";
+    bf = "(lit) (fin) + - * = str\0";
 
-    lexique lit;
     lit.type = MOTS; lit.start = 0; lit.end = 4;
 
-    lexique fin;
     fin.type = MOTS; fin.start = 6; fin.end = 10;
 
-    lexique pl;
     pl.type = MOTS; pl.start = 12; pl.end = 12;
 
-    lexique min;
     min.type = MOTS; min.start = 14; min.end = 14;
 
-    lexique mul;
     mul.type = MOTS; mul.start = 16; mul.end = 16;
 
-    lexique eql;
     eql.type = MOTS; eql.start = 18; mul.end = 18;
 
-    int cfa = vmPtr;
+    str.type = MOTS; str.start = 20; str.end = 22;
 
-    int cfalit, cfafin, cfapl, cfamin, cfamul, cfaeql;
     cfalit = find(LAC, lacPtr+1, bf, lit);
-
+    cfafin = find(LAC, lacPtr+1, bf, fin);
+    cfapl = find(LAC, lacPtr+1, bf, pl);
+    cfamin = find(LAC, lacPtr+1, bf, min);
+    cfamul = find(LAC, lacPtr+1, bf, mul);
+    cfaeql = find(LAC, lacPtr+1, bf, eql);
+    cfastr = find(LAC, lacPtr+1, bf, str);
+    
+    int cfa = vmPtr;
     VM[vmPtr++] = cfalit;
 
     char readchar;
@@ -105,25 +105,25 @@ void compile_lac(char* name, char* func) {
         switch (readchar)
         {
         case '+' :
-            cfapl = find(LAC, lacPtr+1, bf, pl);
+            //cfapl = find(LAC, lacPtr+1, bf, pl);
             VM[vmPtr] = cfapl;
             vmPtr++;
             break;
 
         case '-' :
-            cfamin = find(LAC, lacPtr+1, bf, min);
+            //cfamin = find(LAC, lacPtr+1, bf, min);
             VM[vmPtr] = cfamin;
             vmPtr++;
             break;
 
         case '*' :
-            cfamul = find(LAC, lacPtr+1, bf, mul);
+            //cfamul = find(LAC, lacPtr+1, bf, mul);
             VM[vmPtr] = cfamul;
             vmPtr++;
             break;
 
         case '=' :
-            cfaeql = find(LAC, lacPtr+1, bf, eql);
+            //cfaeql = find(LAC, lacPtr+1, bf, eql);
             VM[vmPtr] = cfaeql;
             vmPtr++;
             break;
@@ -182,19 +182,151 @@ void compile_init() {
     compile_base("cr", &mycr, 19);
     compile_base("calculate", &mycalculate, 20);
     compile_base("str", &mystr, 21);
-    //compile_lac("1-", "1 -");
     compile_lac("0=", "0 =");
     compile_lac("1-", "1 -");
 };
 
 /**
    @brief compile code
-   @param queue* q
+   @param FILE* f, queue* q
  */
-void compile_code(queue* q) {
+void compile_code(FILE* file, queue* q) {
+    //read file to buffer
+    int bufferlen = 0;
+    rewind(file);
+    while(1) {    
+		char ch = fgetc(file);
+		if (ch == EOF) break;
+		bufferlen++;  
+	}
+    char buffer[bufferlen];                      //create the buffer 
+    rewind(file);
+    int count = 0 ;
+    for (int i = 0; i < bufferlen; i++) {
+        char ch = fgetc(file);
+        printf("%c", ch);
+        buffer[i] = ch;
+    }
+
+    compileFLg = 0; updateLACflg = 0;
     compile_init();
+    //for (int i = 0; i < bufferlen; i++) printf("%c", buffer[i]);
+    printf("\n");
+
+    int cfa = 0; // cfa of this function
+    int jumploc = 0;
+    int endifloc = 0;
+    
+    //update VM and LAC
+    lexique lex;
+    q_node *temp = q->front;
+    //printf("qsize is %d\n", q->size);
+    for (int i = 0; i < q->size; i++){
+        lex = *(lexique* )temp->element;
+     
+        for (int i = 0; i < lex.end - lex.start + 1; i++){
+            char ch = buffer[lex.start + i];
+         
+        }
+        int output_size = (lex.end - lex.start) + 2;
+        //printf("%d\n", output_size);
+
+        char output[output_size];
+        
+        for (int i = 0; i < lex.end - lex.start + 1; i++){
+            output[i] = buffer[lex.start + i];
+            //printf("%c ", output[i]);
+        }
+       // printf("\n");
+        output[output_size-1] = '\0';
+        
+        //output the result
+        switch (lex.type)
+        {
+        case INT:
+            VM[vmPtr++] = cfalit;
+            VM[vmPtr++] = atoi(output);
+            break;
+        case MOTS:
+            if (compileFLg) 
+            {
+                if (updateLACflg) {
+                    int funcLen = output_size-1;
+                    int nfa = lacPtr;
+                    LAC[lacPtr++] = funcLen;
+                    for (int j = 0; j < funcLen; j++) 
+                        LAC[lacPtr++] = (int)output[j];
+                    LAC[lacPtr++] = cfa;
+                    LAC[lacPtr++] = nfa;
+                    updateLACflg = 0;
+                }
+                else{
+                    if (strcmp(output, ";") == 0) {
+                        //printf("jiancedaole\n");
+                        endef(); 
+                    }
+                    else if (strcmp(output, "if") == 0) {
+                        int cfaTemp = find(LAC, lacPtr + 1, buffer, lex);
+                        VM[vmPtr++] = cfaTemp;
+                        jumploc = vmPtr++;
+                    }
+                    else if (strcmp(output, "else") == 0) {
+                        int cfaTemp = find(LAC, lacPtr + 1, buffer, lex);
+                        VM[vmPtr++] = cfaTemp;
+                        VM[jumploc] = vmPtr++;
+                        endifloc = vmPtr - 1;
+                    }
+                    else if (strcmp(output, "then") == 0) {
+                        VM[endifloc] = vmPtr - 1;
+                    }
+                    else{
+                        int cfaTemp = find(LAC, lacPtr + 1, buffer, lex);
+                        VM[vmPtr++] = cfaTemp;
+                    } 
+                }
+                
+                //if (strcmp(output, "count") == 0) {
+                //    int cfaTemp = find(LAC, lacPtr + 1, buffer, lex);
+                //    VM[vmPtr++] = cfaTemp;
+
+                //}
+                //if (strcmp(output, "type") == 0) {
+                //    int cfaTemp = find(LAC, lacPtr + 1, buffer, lex);
+                //    VM[vmPtr++] = cfaTemp;
+                //}
+            }
+            else {
+                if (strcmp(output, ":") == 0) {
+                    //printf(":::::jiancedaole\n");
+                    cfa = vmPtr;
+                    def();
+                }
+            
+            }
+            break;
+        case STRING:
+            if (compileFLg) {
+                VM[vmPtr++] = cfastr;
+                int lenStr = output_size-4;
+                VM[vmPtr++] = lenStr;
+                for (int j = 0; j < lenStr; j++) 
+                    VM[vmPtr++] = (int)output[j+2];
+            }
+            
+            break;
+
+        default:
+            break;
+        }
+        temp = temp->next;
+    }
+
+
 };
 
+/**
+   @brief display the LAC and the VM
+ */
 void display() {
     
     int ptr = 1;
@@ -202,24 +334,63 @@ void display() {
 
     printf("\n");
 
-    printf("LAC  ");
-    for (int i = 0; i < lacPtr; i++) {
-        printf("%d ", LAC[i]);
+    int line = (lacPtr + 1) / 50;
+    int readlen = LAC[1]; int disflg = 1;
+
+    for (int l = 0; l <= line; l++){
+        printf("LAC  ");
+        for (int i = 0; i < 50; i++) {
+            printf("%-3d ", (i+l*50));
+        }
+
+        printf("\nLAC  ");
+        for (int i = 0; i < 50; i++) {
+            if (i+l*50 < lacPtr) printf("%-3d ", LAC[i+l*50]);
+            else printf("/   ");
+        }
+        printf("\nLAC  ");
+        
+        for (int i = 0; i < 50; i++) {
+            if (i+l*50 < 2) printf("    ");
+            else{
+                if (0 < i+l*50 < lacPtr) {
+                    if(disflg > 0){
+                        printf("%-3c ", LAC[i+l*50]);
+                        readlen--;
+                        if(readlen == 0) {
+                            disflg = -2;
+                            readlen = LAC[i+l*50 + 3]; 
+                        }
+                    }
+                    else {
+                        printf("    ");
+                        disflg++;
+                    }
+                }
+            }
+        }
+        printf("\n\n");    
+
     }
     printf("\n");
 
-    printf("VM  ");
-    for (int i = 0; i < vmPtr; i++) {
-        printf("%d ", i);
-    }
+    line = vmPtr / 50;
+    for (int l = 0; l <= line; l++) {
+        printf("VM  ");
+        for (int i = 0; i < 50; i++) {
+            printf("%-3d ", (i+l*50));
+        }
 
-    printf("\n");
+        printf("\nVM  ");
+        for (int i = 0; i < 50; i++) {
+            if (i+l*50 < vmPtr) printf("%-3d ", VM[i+l*50]);
+            else printf("/   ");
+        }
+        printf("\n\n");
 
-    printf("VM  ");
-    for (int i = 0; i < vmPtr; i++) {
-        printf("%d ", VM[i]);
     }
-    printf("\n");
+   
+    
 
 
 };
@@ -257,7 +428,10 @@ void myfin(){};
 /**
    @brief base function 6, ':', start to define a function
  */
-void def(){};
+void def(){ 
+    compileFLg = 1; 
+    updateLACflg = 1;
+};
 
 /**
    @brief base function 7, '=', check the top of the 2 elements in stack is equal or not
@@ -299,7 +473,11 @@ void mythen(){};
 /**
    @brief base function 14, ';', end define
  */
-void endef(){};
+void endef(){ 
+    //printf("vmptr %d\n", vmPtr);
+    VM[vmPtr++] = cfafin;
+    compileFLg = 0;
+};
 
 /**
    @brief base function 15, '"', note that a string is coming

@@ -8,6 +8,7 @@
 #include "../analex/analex.h"
 #include "../library/queue.h"
 #include "../anasem/find.h"
+#include <string.h>
 
 typedef void (*base)();
 
@@ -16,6 +17,34 @@ int LAC[LACSize];
 int VM[VMSize];
 int lacPtr; 
 int vmPtr;
+int compileFLg, updateLACflg;
+
+char* bf;
+
+lexique lit;
+  
+
+lexique fin;
+
+
+lexique pl;
+ 
+
+lexique min;
+   
+
+lexique mul;
+  
+
+lexique eql;
+
+
+lexique str;
+
+int cfalit, cfafin, cfapl, cfamin, cfamul, cfaeql, cfastr;
+
+
+    
 
 /**
    @brief compile base function
@@ -25,7 +54,7 @@ void compile_base(char* name, base func, int numProcesseur);
 
 /**
    @brief compile lac function
-   @param char name[] of function, char func[] how to compile
+   @param char name[] of function, char func[] compile format
  */
 void compile_lac(char* name, char* func);
 
@@ -36,9 +65,9 @@ void compile_init();
 
 /**
    @brief compile code
-   @param queue* q
+   @param FILE* f, queue* q
  */
-void compile_code(queue* q);
+void compile_code(FILE *file, queue* q);
 
 void display();
 

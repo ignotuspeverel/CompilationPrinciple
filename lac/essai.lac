@@ -1,0 +1,2 @@
+: essai ( -- ) " Bonjour" count type ;
+essai

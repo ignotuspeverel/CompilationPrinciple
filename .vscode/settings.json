@@ -9,6 +9,7 @@
         "interpret.h": "c",
         "queue.h": "c",
         "compilation.h": "c",
-        "find.h": "c"
+        "find.h": "c",
+        "string.h": "c"
     }
 }

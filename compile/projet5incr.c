@@ -9,7 +9,7 @@ int main (int argc, char** argv)
     queue queue_res;
     queue_init(&queue_res);
 
-    if ((file = fopen("../lac/factorielle.lac", "r")) == NULL) {
+    if ((file = fopen("../lac/incr.lac", "r")) == NULL) {
         perror("Error opening file");
         return 1;
     }

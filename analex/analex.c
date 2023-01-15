@@ -84,8 +84,13 @@ bool lex_analyse(FILE *file, queue *q) {
 
     for(int i = 0; regexec(&reg_compile_int, buffer + i, 1, &result, 0) != REG_NOMATCH; i += result.rm_eo) {
         if (match_check[i+result.rm_so] == 0){
-            for (int j = i+result.rm_so; j < i + result.rm_eo; j ++) 
+            for (int j = i+result.rm_so; j < i + result.rm_eo; j ++) {
                 match_check[j] = STATE_INT;
+            }
+            if((buffer[i+result.rm_eo-1] = ' ') || (buffer[i+result.rm_eo-1] = '\n')) {
+                match_check[i+result.rm_eo-1] = 0;
+            }
+                
         }
     }
 
@@ -98,21 +103,27 @@ bool lex_analyse(FILE *file, queue *q) {
         }
     }
 
+    printf("\nThe check array is: \n");
+    for(int i = 0; i<bufferLength; i++){
+        printf("%d ", match_check[i]);
+    }
+    printf("\n");
+
     //put each content to the queue
     int start_ptr, end_ptr = 0;
     lexique lex;
-    while (start_ptr <= bufferLength) {
+    while (start_ptr < bufferLength) {
         if ((match_check[start_ptr] == 0) || (match_check[start_ptr] == 1)) start_ptr++;
         else{
             end_ptr = start_ptr;
-            while (match_check[end_ptr] != 0 && match_check[end_ptr] != 1) end_ptr++;
+            while (match_check[end_ptr] != 0 && match_check[end_ptr] != 1 && end_ptr < bufferLength) end_ptr++;
         
             switch (match_check[start_ptr])
             {
             case STATE_INT:
                 lex.type = INT;
                 lex.start = start_ptr;
-                lex.end = end_ptr - 2;
+                lex.end = end_ptr - 1;
                 break;
 
             case STATE_MOT:
