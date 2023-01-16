@@ -190,7 +190,7 @@ void compile_init() {
    @brief compile code
    @param FILE* f, queue* q
  */
-void compile_code(FILE* file, queue* q) {
+void compile_code(FILE* file, queue* q, queue* e) {
     //read file to buffer
     int bufferlen = 0;
     rewind(file);
@@ -244,8 +244,13 @@ void compile_code(FILE* file, queue* q) {
         switch (lex.type)
         {
         case INT:
-            VM[vmPtr++] = cfalit;
-            VM[vmPtr++] = atoi(output);
+            if (compileFLg)
+            {
+                VM[vmPtr++] = cfalit;
+                VM[vmPtr++] = atoi(output);
+            }
+            else queue_push_back(e, &lex, sizeof(lex));
+            
             break;
         case MOTS:
             if (compileFLg) 
@@ -301,6 +306,8 @@ void compile_code(FILE* file, queue* q) {
                     cfa = vmPtr;
                     def();
                 }
+                else queue_push_back(e, &lex, sizeof(lex));
+                
             
             }
             break;
@@ -312,6 +319,8 @@ void compile_code(FILE* file, queue* q) {
                 for (int j = 0; j < lenStr; j++) 
                     VM[vmPtr++] = (int)output[j+2];
             }
+            else queue_push_back(e, &lex, sizeof(lex));
+                
             
             break;
 
@@ -398,7 +407,18 @@ void display() {
 /**
    @brief base function 0, '+', plus
  */
-void plus(){};
+void plus(){
+    printf("\n---We execute plus()---\n");
+    ElemType a, b;
+    if (Stack_pop(&data_stack, &a) == OK && Stack_pop(&data_stack, &b) == OK)
+        Stack_push(&data_stack, b+a);
+    else{
+        flgStack = ERROR;
+        printf("pop error");
+        return;
+    }
+    printf("\n---We have executed plus()---\n");
+};
 
 /**
    @brief base function 1, 'swap'
@@ -413,7 +433,7 @@ void mydup(){};
 /**
    @brief base function 3, '(lit)', next number push into the stack
  */
-void mylit(){};
+void mylit(){ readFlg = 1; };
 
 /**
    @brief base function 4, '-', minus
@@ -423,7 +443,9 @@ void minus(){};
 /**
    @brief base function 5, '(fin)', end of a function
  */
-void myfin(){};
+void myfin(ElemType *e) {
+    Stack_pop(&return_stack ,e);
+};
 
 /**
    @brief base function 6, ':', start to define a function
@@ -487,17 +509,47 @@ void notestr(){};
 /**
    @brief base function 16, 'count', how a string is push into the stack
  */
-void mycount(){};
+void mycount(){
+    printf("\n---We execute count()---\n");
+    int res;
+    int len;
+    Stack_pop(&data_stack, &res);
+    len = VM[res];
+    Stack_push(&data_stack, res+1);
+
+    Stack_push(&data_stack, len);
+    
+    printf("\n---We have executed count()---\n");
+};
 
 /**
    @brief base function 17, 'type', type the string in the stack top
  */
-void mytype(){};
+void mytype(){
+    printf("\n---We execute type()---\n\n");
+    int len;
+    int add;
+    Stack_pop(&data_stack, &len);
+    Stack_pop(&data_stack, &add);
+    
+    for (int i = 0; i < len; i++) {
+        char p = (char)VM[add+i];
+        printf("%c", p);
+    }
+    printf("\n\n---We have executed type()---\n\n");
+};
 
 /**
    @brief base function 18, '.', type the value in the stack top
  */
-void mypoint(){};
+void mypoint(){
+    printf("\n---We execute point()---\n");
+    int res;
+    Stack_pop(&data_stack, &res);
+    printf("\nThe top of the stack is: %d\n", res);
+    printf("\n---We have executed point()---\n");
+
+};
 
 /**
    @brief base function 19, 'cr', print \\n
@@ -512,4 +564,6 @@ void mycalculate(){};
 /**
    @brief base function 21, 'str', tell the executer there is a string coming
  */
-void mystr(){};
+void mystr(){
+    strFlg = 1;
+};

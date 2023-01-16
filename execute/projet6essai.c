@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <regex.h>
 #include <stdlib.h>
-#include "compilation.h"
+#include "executeur.h"
 
 int main (int argc, char** argv)
 {
@@ -17,14 +17,17 @@ int main (int argc, char** argv)
     }
 
     printf("\nAnalyzing the file:\n");
-
     lex_analyse(file, &queue_res);
 
     printf("Compiling file:\n");
     compile_code(file, &queue_res, &queue_exe);
-    printf("\nNow we display LAC and VM after compilation:\n");
     
+    printf("\nNow we display LAC and VM after compilation:\n");
     display();
+
+    //printf("\nqesize: %d\n", queue_exe.size);
+
+    execute(file, &queue_exe);
 
     fclose(file);
     return 0;

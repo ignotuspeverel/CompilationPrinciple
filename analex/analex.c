@@ -12,6 +12,7 @@
    @param FILE and a queue to store the result of the lexique
  */
 bool lex_analyse(FILE *file, queue *q) {
+    //printf("\nAnalyzing the file:\n");
     int bufferLength = 0;
     regex_t reg_compile_comment;
     regex_t reg_compile_int;
@@ -101,7 +102,7 @@ bool lex_analyse(FILE *file, queue *q) {
                     match_check[j] = STATE_MOT;
             }             
         }
-    }
+    }    
 
     printf("\nThe check array is: \n");
     for(int i = 0; i<bufferLength; i++){

@@ -2,9 +2,12 @@
 #define EXECUTEUR_H
 
 #include "../compile/compilation.h"
-#include "../library/stack.h"
 
-Stack data_stack, return_stack;
+/**
+   @brief run the code VM[cfa] in a recursive way
+   @param int cfa
+ */
+void runCodecfa(int cfa);
 
 /**
    @brief execute the code

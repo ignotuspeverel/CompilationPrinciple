@@ -9,6 +9,11 @@
 #include "../library/queue.h"
 #include "../anasem/find.h"
 #include <string.h>
+#include "../library/stack.h"
+
+Stack data_stack, return_stack;
+
+Stack_err_t flgStack;
 
 typedef void (*base)();
 
@@ -17,7 +22,7 @@ int LAC[LACSize];
 int VM[VMSize];
 int lacPtr; 
 int vmPtr;
-int compileFLg, updateLACflg;
+int compileFLg, updateLACflg, strFlg, readFlg;
 
 char* bf;
 
@@ -67,7 +72,7 @@ void compile_init();
    @brief compile code
    @param FILE* f, queue* q
  */
-void compile_code(FILE *file, queue* q);
+void compile_code(FILE *file, queue* q, queue *e);
 
 void display();
 
@@ -100,7 +105,7 @@ void minus();
 /**
    @brief base function 5, '(fin)', end of a function
  */
-void myfin();
+void myfin(ElemType* e);
 
 /**
    @brief base function 6, ':', start to define a function
