@@ -1,5 +1,5 @@
-#ifndef EXECUTEUR_H
-#define EXECUTEUR_H
+#ifndef EXECUTEURPURE_H
+#define EXECUTEURPURE_H
 
 #include "../compile/compilation.h"
 

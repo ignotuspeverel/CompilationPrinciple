@@ -56,4 +56,8 @@ tree term(int sptr, int eptr, char* s, char* origin, number location[]);
  */
 void printTree(tree tr, int blank);
 
+int cal(tree tr);
+
+int isNum(char* s);
+
 #endif

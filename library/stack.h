@@ -14,7 +14,7 @@ typedef enum{
 
 typedef int ElemType; 
 #define STACK_INIT_SIZE 100
-#define STACK_INCREMENT 10
+#define STACK_INCREMENT 100
 
 typedef struct{
     ElemType *base;

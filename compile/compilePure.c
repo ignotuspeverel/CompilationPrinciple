@@ -1,4 +1,4 @@
-#include "compilation.h"
+#include "compilePure.h"
 #include "../execute/executeur.h"
 #include "../anasynt/anasynt.h"
 
@@ -410,7 +410,7 @@ void display() {
    @brief base function 0, '+', plus
  */
 void plus() {
-    printf("\n---We execute '+'---\n");
+    //printf("\n---We execute '+'---\n");
     ElemType a, b;
     if (Stack_pop(&data_stack, &a) == OK && Stack_pop(&data_stack, &b) == OK)
         Stack_push(&data_stack, b+a);
@@ -419,7 +419,7 @@ void plus() {
         printf("pop error");
         return;
     }
-    printf("\n---We have executed '+'---\n");
+    //printf("\n---We have executed '+'---\n");
 };
 
 /**
@@ -431,7 +431,7 @@ void swap() {};
    @brief base function 2, 'dup', duplicate the stack top
  */
 void mydup() {
-    printf("\n---We execute 'dup'---\n");
+    //printf("\n---We execute 'dup'---\n");
     ElemType a;
     if (Stack_pop(&data_stack, &a) == OK) {
         Stack_push(&data_stack, a);
@@ -442,7 +442,7 @@ void mydup() {
         printf("pop error");
         return;
     }
-    printf("\n---We have executed 'dup'---\n");
+    //printf("\n---We have executed 'dup'---\n");
 };
 
 /**
@@ -454,7 +454,7 @@ void mylit() { readFlg = 1; };
    @brief base function 4, '-', minus
  */
 void minus() {
-    printf("\n---We execute '-'---\n");
+    //printf("\n---We execute '-'---\n");
     ElemType a, b;
     if (Stack_pop(&data_stack, &a) == OK && Stack_pop(&data_stack, &b) == OK)
         Stack_push(&data_stack, b-a);
@@ -463,7 +463,7 @@ void minus() {
         printf("pop error");
         return;
     }
-    printf("\n---We have executed '-'---\n");
+    //printf("\n---We have executed '-'---\n");
 };
 
 /**
@@ -486,7 +486,7 @@ void def() {
    @return equal -1; not equal 0
  */
 void equal() {
-    printf("\n---We execute '='---\n");
+    //printf("\n---We execute '='---\n");
     ElemType a, b;
     if (Stack_pop(&data_stack, &a) == OK && Stack_pop(&data_stack, &b) == OK) {
         if (a == b) Stack_push(&data_stack, -1);
@@ -497,7 +497,7 @@ void equal() {
         printf("pop error");
         return;
     }
-    printf("\n---We have executed '='---\n");
+    //printf("\n---We have executed '='---\n");
     
 
 };
@@ -511,11 +511,11 @@ void myif() {
     ElemType a;
     if (Stack_pop(&data_stack, &a) == OK) {
         if (a == -1) { 
-            printf("\n---We execute 'if'---\n");
+            //printf("\n---We execute 'if'---\n");
             ifFlg = 1;
         }
         else {
-            printf("\n---We execute 'else'---\n");
+            //printf("\n---We execute 'else'---\n");
             myelse();
         };
     }
@@ -533,15 +533,15 @@ void myif() {
    @brief base function 9, 'drop', pop the stack top
  */
 void mydrop() {
-    printf("\n---We execute 'drop'---\n");
+    //printf("\n---We execute 'drop'---\n");
     ElemType a;
     if (Stack_pop(&data_stack, &a) == OK) {
-        printf("\n---We have executed 'drop'---\n");
+        //printf("\n---We have executed 'drop'---\n");
     }
     else{
         flgStack = ERROR;
         printf("pop error");
-        printf("\n---We have executed 'drop'---\n");
+        //printf("\n---We have executed 'drop'---\n");
         return;
     }
     
@@ -556,21 +556,21 @@ void myelse(){ elseFlg = 1; };
    @brief base function 11, 'recurse', go back to this function and do again
  */
 void myrecurse() { 
-    printf("\n---We execute 'recurse'---\n");
+    //printf("\n---We execute 'recurse'---\n");
     int cfaCurse;
     Stack_pop(&return_stack, &cfaCurse);
     Stack_pop(&return_stack, &cfaAnchor);
     Stack_push(&return_stack, cfaCurse);
     Stack_push(&return_stack, cfaAnchor);
     runCodecfa(cfaAnchor); 
-    printf("\n---We have executed 'recurse'---\n");
+    //printf("\n---We have executed 'recurse'---\n");
 };
 
 /**
    @brief base function 12, '*', multiply
  */
 void multiply() {
-     printf("\n---We execute '*'---\n");
+    //printf("\n---We execute '*'---\n");
     ElemType a, b;
     if (Stack_pop(&data_stack, &a) == OK && Stack_pop(&data_stack, &b) == OK)
         Stack_push(&data_stack, b*a);
@@ -579,7 +579,7 @@ void multiply() {
         printf("pop error");
         return;
     }
-    printf("\n---We have executed '*'---\n");
+    //printf("\n---We have executed '*'---\n");
 };
 
 /**
@@ -605,7 +605,7 @@ void notestr(){};
    @brief base function 16, 'count', how a string is push into the stack
  */
 void mycount(){
-    printf("\n---We execute count()---\n");
+    //printf("\n---We execute count()---\n");
     int res;
     int len;
     Stack_pop(&data_stack, &res);
@@ -614,14 +614,14 @@ void mycount(){
 
     Stack_push(&data_stack, len);
     
-    printf("\n---We have executed count()---\n");
+    //printf("\n---We have executed count()---\n");
 };
 
 /**
    @brief base function 17, 'type', type the string in the stack top
  */
 void mytype(){
-    printf("\n---We execute type()---\n\n");
+    //printf("\n---We execute type()---\n\n");
     int len;
     int add;
     Stack_pop(&data_stack, &len);
@@ -631,18 +631,18 @@ void mytype(){
         char p = (char)VM[add+i];
         printf("%c", p);
     }
-    printf("\n\n---We have executed type()---\n\n");
+    //printf("\n\n---We have executed type()---\n\n");
 };
 
 /**
    @brief base function 18, '.', type the value in the stack top
  */
 void mypoint(){
-    printf("\n---We execute '.'---\n");
+    //printf("\n---We execute '.'---\n");
     int res;
     Stack_pop(&data_stack, &res);
-    printf("\nThe top of the stack is: %d\n", res);
-    printf("\n---We have executed '.'---\n");
+    printf(" %d ", res);
+    //printf("\n---We have executed '.'---\n");
 
 };
 
@@ -650,9 +650,9 @@ void mypoint(){
    @brief base function 19, 'cr', print \\n
  */
 void mycr() {
-    printf("\n---We execute 'cr'---\n");
+    //printf("\n---We execute 'cr'---\n");
     printf("\n");
-    printf("\n---We have executed 'cr'---\n");
+    //printf("\n---We have executed 'cr'---\n");
    
 };
 
@@ -660,14 +660,14 @@ void mycr() {
    @brief base function 20, 'calculate', calculate a string
  */
 void mycalculate() {
-    printf("\n---We execute 'calculate'---\n");
+    //printf("\n---We execute 'calculate'---\n");
     char *trans;
     int charLen = strlen(executeString) - 3;
     char s[charLen];
     for (int i = 0; i < charLen; i++) {
         s[i] = executeString[i+2];
     }
-    printf("\n---'len': %d---\n",charLen);
+    //printf("\n---'len': %d---\n",charLen);
     int bufferLength;
     char buffer[2*(charLen + 1)];
     number location[2*(charLen + 1)];
@@ -681,7 +681,7 @@ void mycalculate() {
     //printf("\n---'calculate': %d---\n",calres);
     Stack_push(&data_stack, calres);
 
-    printf("\n---We have executed 'calculate'---\n");
+    //printf("\n---We have executed 'calculate'---\n");
 };
 
 /**

@@ -1,4 +1,4 @@
-#include "executeur.h"
+#include "executeurPure.h"
 
 /**
    @brief run the code VM[cfa] in a recursive way
@@ -15,13 +15,13 @@ void runCodecfa(int cfa){
     //}
     int executeVM = VM[cfa];   //executeVM maybe a cfa of a function or it is already a base function
     Stack_push(&return_stack, cfa);
-    printf("\njinzhan %d--------------------------------s size: %d \n", cfa, Stack_length(&return_stack));
-    printf("\n In the stack: ");
-    for (int i = 1; i <= Stack_length(&return_stack); i++) {
-        printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
-    }
-    printf("\n");
-    printf("\nNOW we start to execute the VM[%d]\n", cfa);
+    //printf("\njinzhan %d--------------------------------s size: %d \n", cfa, Stack_length(&return_stack));
+    //printf("\n In the stack: ");
+    //for (int i = 1; i <= Stack_length(&return_stack); i++) {
+    //    printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
+    //}
+    //printf("\n");
+    //printf("\nNOW we start to execute the VM[%d]\n", cfa);
     int res, startloc, endloc;
     if (executeVM == -1) //if it is a base function, we run the function and then we pop
     {
@@ -30,13 +30,13 @@ void runCodecfa(int cfa){
             //printf("\n------------------------------------ %d\n", cfa+1);
             processeur[VM[cfa+1]]();
             myfin(&res);
-            printf("\nchule1 %d--------------------------------s size: %d \n", res, Stack_length(&return_stack));
-            printf("\n In the stack: ");
-            for (int i = 1; i <= Stack_length(&return_stack); i++) {
-                printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
-            }
-            printf("\n");
-            printf("\nBase function: We have executed the VM[%d]\n", res);
+            //printf("\nchule1 %d--------------------------------s size: %d \n", res, Stack_length(&return_stack));
+            //printf("\n In the stack: ");
+            //for (int i = 1; i <= Stack_length(&return_stack); i++) {
+            //    printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
+            //}
+            //printf("\n");
+            //printf("\nBase function: We have executed the VM[%d]\n", res);
         }
         //else
         //{
@@ -124,7 +124,7 @@ void runCodecfa(int cfa){
                     
                     //Stack_pop(&return_stack, &res);
                     //printf("\nchule2 %d--------------------------------s size: %d \n", res, Stack_length(&return_stack));
-                    printf("\nWe execute VM[%d] and push %d to stack.\n", cfa, VM[cfa]);
+                    //printf("\nWe execute VM[%d] and push %d to stack.\n", cfa, VM[cfa]);
                     cfa += 1;
                     executeVM = VM[cfa];
                     readFlg = 0;
@@ -139,14 +139,14 @@ void runCodecfa(int cfa){
         if (executeVM == cfafin) //if we reach the fin
         {
             myfin(&res);
-            printf("\nchule2 %d--------------------------------s size: %d \n", res, Stack_length(&return_stack));
-            printf("\n In the stack: ");
-            for (int i = 1; i <= Stack_length(&return_stack); i++) {
-                printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
-            }
-            printf("\nchule--------------------------------s size: %d \n", Stack_length(&return_stack));
+            //printf("\nchule2 %d--------------------------------s size: %d \n", res, Stack_length(&return_stack));
+            //printf("\n In the stack: ");
+            //for (int i = 1; i <= Stack_length(&return_stack); i++) {
+            //    printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
+            //}
+            //printf("\nchule--------------------------------s size: %d \n", Stack_length(&return_stack));
            
-            printf("\nLAC function: We have executed the VM[%d]\n", res);
+            //printf("\nLAC function: We have executed the VM[%d]\n", res);
         }
        
     }
@@ -158,7 +158,7 @@ void runCodecfa(int cfa){
    @param FILE* f, queue* q
  */
 void execute(FILE *file, queue* q) {
-    printf("\n-----Start executing-----\n");
+    printf("\n-----Start executing-----\n\n");
     Stack_init(&data_stack);
     Stack_init(&return_stack);
     //read file to buffer
@@ -218,13 +218,13 @@ void execute(FILE *file, queue* q) {
             //printf("\n\nNumber!!!!!!!!!!!!!!!!!!!!\n\n");
             num = atoi(output);
             Stack_push(&data_stack, num);
-            printf("We read a INT and push to data stack: %d\n", num);
+            //printf("\nWe read a INT and push to data stack: %d\n", num);
             break;
         case MOTS:
             //int cfaTemp;
             cfaTemp = find(LAC, lacPtr + 1, buffer, lex);
             cfaAnchor = cfaTemp;
-            printf("We read a MOTS: %s and find the function in %d\n", output, cfaTemp);
+            //printf("\nWe read a MOTS: %s and find the function in %d\n", output, cfaTemp);
             runCodecfa(cfaTemp);
             break;
         case STRING:
@@ -232,7 +232,7 @@ void execute(FILE *file, queue* q) {
                 executeString[i] = output[i];
                 //printf("%c ", output[i]);
             }
-            printf("We read a string %s\n", executeString);      
+            //printf("\nWe read a string %s\n", executeString);      
             break;
 
         default:
@@ -244,5 +244,3 @@ void execute(FILE *file, queue* q) {
 
 
 };
-
-

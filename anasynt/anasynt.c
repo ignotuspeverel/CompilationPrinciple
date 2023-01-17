@@ -178,4 +178,35 @@ void printTree(tree tr, int blank)
     printTree(tr->rc, blank + len + 1);
 }
 
+int cal(tree tr) {
+    if (tr == NULL) return 0;
+    if (isNum(tr->label)) return atoi(tr->label);
+
+    switch (tr->label[0])
+    {
+    case '+':
+        return cal(tr->lc)+cal(tr->rc);
+        break;
+    case '-':
+        return cal(tr->lc)-cal(tr->rc);
+        break;
+
+    case 'x':
+        return cal(tr->lc)*cal(tr->rc);
+        break;
+
+    default:
+        break;
+    }
+
+}
+
+int isNum(char* s) {
+    int len = strlen(s);
+    for (int i = 0; i < len; i++) {
+        if(s[i] < 48 || s[i] >57) return 0;
+    }
+    return 1;
+}
+
 

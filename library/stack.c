@@ -9,9 +9,13 @@ Stack_err_t Stack_init(Stack *s){
 }
 
 Stack_err_t Stack_push(Stack *s, ElemType e){
-    if((s->top - s->base)/sizeof(ElemType) >= s->stackSize){
-        s->base = (ElemType *)realloc(s->base, (s->stackSize + STACK_INCREMENT) * sizeof(ElemType));
+    if((s->top - s->base) == s->stackSize * sizeof(ElemType)){
+        //printf("\n----------------------------------------------------------------\n");
+        int *temp = s->base;
+        s->base = (ElemType *)malloc((s->stackSize + STACK_INCREMENT) * sizeof(ElemType));
+        //s->base = (ElemType *)realloc(s->base, (s->stackSize + STACK_INCREMENT) * sizeof(ElemType));
         if(!s->base) return ERROR;
+        memcpy(s->base, temp, sizeof(ElemType)*s->stackSize);
         s->top = s->base + s->stackSize * sizeof(ElemType);
         s->stackSize = s->stackSize + STACK_INCREMENT;
     }
