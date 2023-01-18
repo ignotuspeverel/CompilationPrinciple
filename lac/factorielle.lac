@@ -11,7 +11,7 @@ l'analyseur lexical écrit en phase 1 du projet)
         dup 1- recurse * 
     then ;
 
- : go  ( n -- )
+: go  ( n -- )
     " Factorielle" count type
     dup .
     " vaut : 

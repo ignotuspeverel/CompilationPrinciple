@@ -7,7 +7,9 @@ int main (int argc, char** argv)
 {
     FILE* file;
     queue queue_res;
+    queue queue_exe;
     queue_init(&queue_res);
+    queue_init(&queue_exe);
 
     if ((file = fopen("../lac/incr.lac", "r")) == NULL) {
         perror("Error opening file");
@@ -19,7 +21,7 @@ int main (int argc, char** argv)
     lex_analyse(file, &queue_res);
 
     printf("Compiling file:\n");
-    compile_code(file, &queue_res);
+    compile_code(file, &queue_res, &queue_exe);
     printf("\nNow we display LAC and VM after compilation:\n");
     
     display();

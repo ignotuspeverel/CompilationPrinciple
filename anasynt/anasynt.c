@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include "anasynt.h"
 
-/*
+/**
    @brief translate a string input to a BNF string
    @param input string, output buffer, an array to store the location of number, the length of the output 
 */
@@ -73,7 +73,7 @@ bool translate(char* s, char buffer[], number location[], int* bufferLen)
     return true;
 }
 
-/*
+/**
    @brief assemble a tree with lc and rc
    @param a label for the node, lc, rc
 */
@@ -88,7 +88,7 @@ tree assemble(char* name, tree left, tree right)
     return newTree;
 }
 
-/*
+/**
    @brief recognize a factD
    @param startptr, endptr, input BNF string, original string, an array to store the location of number
 */
@@ -106,7 +106,7 @@ tree factD(int sptr, int eptr, char* s, char* origin, number location[])
   return NULL;
 }
 
-/*
+/**
    @brief recognize a fact
    @param startptr, endptr, input BNF string, original string, an array to store the location of number
 */
@@ -129,7 +129,7 @@ tree fact(int sptr, int eptr, char* s, char* origin, number location[])
     return NULL;
 }
 
-/*
+/**
    @brief recognize a term
    @param startptr, endptr, input BNF string, original string, an array to store the location of number
 */
@@ -165,7 +165,7 @@ tree term(int sptr, int eptr, char* s, char* origin, number location[])
     return NULL;
 }
 
-/*
+/**
    @brief print the tree
 */
 void printTree(tree tr, int blank)
@@ -178,6 +178,9 @@ void printTree(tree tr, int blank)
     printTree(tr->rc, blank + len + 1);
 }
 
+/**
+   @brief do the calucate of a tree
+*/
 int cal(tree tr) {
     if (tr == NULL) return 0;
     if (isNum(tr->label)) return atoi(tr->label);
@@ -201,6 +204,9 @@ int cal(tree tr) {
 
 }
 
+/**
+   @brief test if a char* is a digit
+*/
 int isNum(char* s) {
     int len = strlen(s);
     for (int i = 0; i < len; i++) {

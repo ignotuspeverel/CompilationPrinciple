@@ -15,12 +15,12 @@ void runCodecfa(int cfa){
     //}
     int executeVM = VM[cfa];   //executeVM maybe a cfa of a function or it is already a base function
     Stack_push(&return_stack, cfa);
-    printf("\njinzhan %d--------------------------------s size: %d \n", cfa, Stack_length(&return_stack));
-    printf("\n In the stack: ");
-    for (int i = 1; i <= Stack_length(&return_stack); i++) {
-        printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
-    }
-    printf("\n");
+    //printf("\nPush into stack: %d-------------------------------- size: %d \n", cfa, Stack_length(&return_stack));
+    //printf("\n In the stack: ");
+    //for (int i = 1; i <= Stack_length(&return_stack); i++) {
+    //    printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
+    //}
+    //printf("\n");
     printf("\nNOW we start to execute the VM[%d]\n", cfa);
     int res, startloc, endloc;
     if (executeVM == -1) //if it is a base function, we run the function and then we pop
@@ -30,12 +30,12 @@ void runCodecfa(int cfa){
             //printf("\n------------------------------------ %d\n", cfa+1);
             processeur[VM[cfa+1]]();
             myfin(&res);
-            printf("\nchule1 %d--------------------------------s size: %d \n", res, Stack_length(&return_stack));
-            printf("\n In the stack: ");
-            for (int i = 1; i <= Stack_length(&return_stack); i++) {
-                printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
-            }
-            printf("\n");
+            //printf("\nPop out stack: %d-------------------------------- size: %d \n", res, Stack_length(&return_stack));
+            //printf("\n In the stack: ");
+            //for (int i = 1; i <= Stack_length(&return_stack); i++) {
+            //    printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
+            //}
+            //printf("\n");
             printf("\nBase function: We have executed the VM[%d]\n", res);
         }
         //else
@@ -139,12 +139,12 @@ void runCodecfa(int cfa){
         if (executeVM == cfafin) //if we reach the fin
         {
             myfin(&res);
-            printf("\nchule2 %d--------------------------------s size: %d \n", res, Stack_length(&return_stack));
-            printf("\n In the stack: ");
-            for (int i = 1; i <= Stack_length(&return_stack); i++) {
-                printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
-            }
-            printf("\nchule--------------------------------s size: %d \n", Stack_length(&return_stack));
+            //printf("\nPop out stack: %d-------------------------------- size: %d \n", res, Stack_length(&return_stack));
+            //printf("\n In the stack: ");
+            //for (int i = 1; i <= Stack_length(&return_stack); i++) {
+            //    printf("%d ", *(return_stack.top - i*sizeof(ElemType)));
+            //}
+            //printf("\nPop out stack: -------------------------------- size: %d \n", Stack_length(&return_stack));
            
             printf("\nLAC function: We have executed the VM[%d]\n", res);
         }
@@ -240,7 +240,7 @@ void execute(FILE *file, queue* q) {
         }
         temp = temp->next;
     }
-    printf("\n-----End executing-----\n\n");
+    printf("\n\n-----End executing-----\n\n");
 
 
 };

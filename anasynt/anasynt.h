@@ -56,8 +56,14 @@ tree term(int sptr, int eptr, char* s, char* origin, number location[]);
  */
 void printTree(tree tr, int blank);
 
+/**
+   @brief do the calucate of a tree
+*/
 int cal(tree tr);
 
+/**
+   @brief test if a char* is a digit
+*/
 int isNum(char* s);
 
 #endif

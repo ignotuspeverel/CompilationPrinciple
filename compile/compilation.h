@@ -22,6 +22,7 @@ int LAC[LACSize];
 int VM[VMSize];
 int lacPtr; 
 int vmPtr;
+
 int compileFLg, updateLACflg, strFlg, readFlg, ifFlg, elseFlg, inIf, ifLen;
 int cfaAnchor;
 
@@ -71,10 +72,13 @@ void compile_init();
 
 /**
    @brief compile code
-   @param FILE* f, queue* q
+   @param FILE* f, queue* q for compilation, and queue* e for execution
  */
 void compile_code(FILE *file, queue* q, queue *e);
 
+/**
+   @brief display the LAC and VM
+ */
 void display();
 
 //Now we define the base function
