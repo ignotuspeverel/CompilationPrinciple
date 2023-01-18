@@ -102,7 +102,7 @@ $ ./test
 
 ### **1.5 RESULT:**
 
-![](.\src\lexresult.jpg)
+<img src=".\src\lexresult.jpg" />
 
 ## **Part 2 Analyse syntaxique**
 
@@ -113,8 +113,8 @@ For this part, I used a BNF. All the detailed files are in the folder **anasynt*
 The BNF I used is:
 
 
+<img src=".\src\BNF.jpg" />
 
-![](D:\plt\src\BNF.jpg)
 
 | **N**    | **NUMBER**     |
 | -------- | -------------- |
@@ -189,7 +189,7 @@ $ ./test
 
 ### **2.4 RESULT:**
 
-![](D:\plt\src\anasyntRes.jpg)
+<img src=".\src\anasyntRes.jpg" />
 
 <div style="page-break-after:always;"></div>
 
@@ -244,7 +244,7 @@ $ ./test
 
 ### **3.3 RESULT:**
 
-<img src="D:\plt\src\res3.jpg" style="zoom:100%;" />
+<img src=".\src\res3.jpg" style="zoom:100%;" />
 
 
 
@@ -484,7 +484,7 @@ $ ./test
 
 - **essai.lac**
 
-![](D:\plt\src\res5essai.jpg)
+<img src=".\src\res5essai.jpg" style="zoom:100%;" />
 
 **LAC:**
 
@@ -508,11 +508,11 @@ The other two documents are quite the same.
 
 - **incr.lac**
 
-![](D:\plt\src\res5incr.jpg)
+<img src=".\src\res5incr.jpg" style="zoom:100%;" />
 
 - **fact.lac**
 
-![](D:\plt\src\res5fact.jpg)
+<img src=".\src\res5fact.jpg" style="zoom:100%;" />
 
 
 
