@@ -1,10 +1,6 @@
 # PROJECT FOR CS448
 
-[TOC]
 
-
-
-<div style="page-break-after:always;"></div>
 
 ## **Part0 Introduction of the project**
 
